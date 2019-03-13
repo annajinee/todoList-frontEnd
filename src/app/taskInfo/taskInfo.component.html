@@ -1,0 +1,93 @@
+<section style="margin: 5%">
+    <div class="container">
+        <div class="card-header" style="margin-bottom: 2%">
+            <h2 style="font-weight: 900">Todo List</h2>
+        </div>
+        <div class="card">
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-sm-3 m-b-25" align="left" style="vertical-align:bottom">
+                        <button class="btn btn-info hec-button" (click)="openTaskModal()">할 일 추가하기</button>
+                    </div>
+                </div>
+            </div>
+
+            <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" (∫)="closed()"
+                   (onDismiss)="dismissed()"
+                   (onOpen)="opened()" [cssClass]="cssClass" #modal>
+                <modal-header [show-close]="true">
+                    <h4 class="modal-title" style="font-weight: bold; font-size: larger">할 일 추가하기</h4>
+                </modal-header>
+                <modal-body>
+                    <form>
+                        <table class="table table-striped">
+                            <tr>
+                                <td width="30%" style="color: #418c97; font-weight: bold">할 일</td>
+                                <td><input type="text" #mission autofocus
+                                           class="form-control"
+                                           maxlength="100" width="100%" title="task"/></td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="color: #418c97; font-weight: bold">할일 참조</td>
+                                <td>
+                                    <select class="selectpicker" style="width:75%" title="refTask">
+                                        <option value="">전체</option>
+                                        <option value="{{task.rowId}}" *ngFor="let tasks of Tasks">
+                                            [{{task.rowId}}]{{task.mission}}
+                                        </option>
+                                        <button type="button" class="btn btn-info" style="margin-left: 4%" (click)="addRefTask(task.rowId);">추가</button>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="30%" style="color: #418c97; font-weight: bold">참조 된 일</td>
+                                <td>{{refTasks}}</td>
+                            </tr>
+                            <br>
+                            <tr align="right">
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="addTask(mission);">저장</button>&nbsp;
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                            (click)="modal.close()">닫기
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </modal-body>
+            </modal>
+            <table class="table table-striped table-hover">
+                <tr style="color: #418c97; background-color: white;" align="center">
+                    <th width="10%">Id</th>
+                    <th width="10%">할일</th>
+                    <th width="10%">작성일시</th>
+                    <th width="10%">최종수정일시</th>
+                    <th width="10%">완료처리</th>
+                    <th width="5%">버튼</th>
+                </tr>
+                <tbody>
+                <tr *ngFor="let task of tasks">
+                    <td style="cursor: hand" (click)="openTaskModal(task)">{{ task.rowId }}</td>
+                    <td style="cursor: hand" (click)="openTaskModal(task)">{{ task.mission }}</td>
+                    <td style="cursor: hand" (click)="openTaskModal(task)">{{ task.regDate }}</td>
+                    <td style="cursor: hand" (click)="openTaskModal(task)">{{ task.modDate }}</td>
+                    <td><select class="selectpicker" #endYn style="width: 100%" title="endYn">
+                        <option value="">상태값</option>
+                        <option value="N">대기중(N)</option>
+                        <option value="P">처리중(P)</option>
+                        <option value="Y">완료(Y)</option>
+                        <option value="E">에러(E)</option>
+                    </select></td>
+                    <td>
+                        <button class="btn btn-info hec-button" type="submit" (click)="setEndYn(endYn)">적용</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <pagination [total]="total$ | async" [page]="page" (goTo)="getToDoList($event, page)"></pagination>
+        </div>
+    </div>
+</section>
+
