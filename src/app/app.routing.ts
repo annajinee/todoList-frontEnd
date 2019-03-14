@@ -1,9 +1,9 @@
 import {Routes, RouterModule} from '@angular/router';
-import {PostuserinfoComponent} from "./taskInfo/taskInfo.component";
+import {ToDoListComponent} from './taskInfo/todolist.component';
 
 const appRoutes: Routes = [
 
-  {path: 'home', component: PostuserinfoComponent},
+  {path: 'home', component: ToDoListComponent},
   {path: '**', redirectTo: 'home'}
 ];
 
