@@ -1,40 +1,39 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs/Observable';
 import {Headers, Http, Response} from '@angular/http';
-import {Router} from "@angular/router";
-import {Task} from "../models/task";
+import {Router} from '@angular/router';
+import {ToDoListData} from '../models/todolist';
+import 'rxjs/add/operator/catch';
 
 
 @Injectable()
-export class PostuserinfoService {
+export class ToDoListService {
 
     private url: string;
 
     constructor(private http: Http, private router: Router,) {
-        this.url = '/api/todo';
+        this.url = '/todo';
     }
 
-    getToDoList(page): Observable<Task[]> {
+    getToDoList(position, size): Observable<ToDoListData[]> {
 
-        return this.http.post(this.url, {
-            page: page
-        }, {headers: this.prepareHeaders()})
-            .map(res => <Task[]> res.json())
+        return this.http.get(this.url + '/list/' + position + '/' + size, {headers: this.prepareHeaders()})
+            .map(res => res.json())
             .catch(this.handleError);
     }
 
-    addToDo(mission, refTasks): Observable<Task[]> {
+    addToDo(mission, refTasks): Observable<ToDoListData[]> {
 
         return this.http.post(this.url, {
-            task: Task
+            task: ToDoListData
         }, {headers: this.prepareHeaders()})
-            .map(res => <Task[]> res.json())
+            .map(res => <ToDoListData[]> res.json())
             .catch(this.handleError);
     }
 
 
 
-    setEndYn(rowId, endYn): Observable<Task[]> {
+    setEndYn(rowId, endYn): Observable<ToDoListData[]> {
         return this.http.put(this.url + '/' + rowId, {
             rowId: rowId,
             endYn: endYn
@@ -42,13 +41,13 @@ export class PostuserinfoService {
             .catch(this.handleError);
     }
 
-    editTask(task: Task): Observable<Task[]> {
-        return this.http.put(this.url + '/' + task.rowId, {
-            rowId: task.rowId,
-            mission: task.mission,
-            regDate: task.regDate,
-            modDate: task.modDate,
-            endYn: task.endYn
+    editTask(todo: ToDoListData): Observable<ToDoListData[]> {
+        return this.http.put(this.url + '/' + todo.rowId, {
+            rowId: todo.rowId,
+            mission: todo.toDo,
+            regDate: todo.regDate,
+            modDate: todo.modDate,
+            endYn: todo.endYn
         }, {headers: this.prepareHeaders()})
             .catch(this.handleError);
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output, Input, style} from '@angular/core';
+import {Component, EventEmitter, Output, Input} from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -7,16 +7,12 @@ import {Component, OnInit, EventEmitter, Output, Input, style} from '@angular/co
 })
 export class PaginationComponent {
 
-
     @Input()
     total: number = 0;
-
     @Input()
     page: number = 0;
-
     @Output()
     goTo: EventEmitter<number> = new EventEmitter<number>();
-
     from: number = 1;
     to: number;
 
@@ -38,15 +34,12 @@ export class PaginationComponent {
 
 
     pageLast() {
-        return Math.min(this.totalPages(), this.totalPages()); //페이지 마지막으로
+        return Math.min(this.totalPages(), this.totalPages());
     }
 
 
-    nextPage() {  //10페이지씩 페이지 다음
-
+    nextPage() {
         return Math.min(this.totalPages(), this.page + 11);
-        // return Math.min(this.totalPages(),this.page + 2);
-
     }
 
     pageClicked(page: number) {
@@ -58,7 +51,6 @@ export class PaginationComponent {
         if (this.totalPages() <= 10) {  // 10페이지 보다 작을 경우, 다 보이도록
             return this.range(this.from, this.totalPages() + 1);
         } else {
-            // more than 10 total pages so calculate start and end pages
             if (this.page <= 6) {
                 this.from = 1;
                 this.to = 10;

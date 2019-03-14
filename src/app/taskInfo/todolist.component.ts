@@ -1,25 +1,24 @@
-import {
-    Component,
-        OnInit, ViewChild,
-} from '@angular/core';
-import {Subject, Observable} from "rxjs";
-import {PostuserinfoService} from "../services/taskInfo.service";
-import {Task} from "../models/task";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
+import {ToDoListService} from '../services/todolist.service';
+import {ToDoListData} from '../models/todolist';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
+import 'rxjs/add/observable/of';
+import {Pageinfo} from '../models/pageinfo';
 
 
 @Component({
     selector: 'app-postuserinfo',
-    templateUrl: 'taskInfo.component.html'
+    templateUrl: 'todolist.component.html'
 })
-export class PostuserinfoComponent implements OnInit {
+export class ToDoListComponent implements OnInit {
 
-    tasks: Task[];
+    tasks: ToDoListData[];
     rowId: number;
     endYn: string;
-    refTasks : Array<number>;
+    refTasks: Array<number>;
     model: any = {};
-    // 페이징
     totalPages: number;
     totalElements: number;
     last: number;
@@ -29,19 +28,22 @@ export class PostuserinfoComponent implements OnInit {
     total$: Observable<number>;
     private searchTermStream = new Subject<string>();
     page: number = 1;
-
     selected: string;
     output: string;
     cssClass: string = '';
     animation: boolean = true;
     keyboard: boolean = true;
     backdrop: string | boolean = true;
+    toDoDetailData: ToDoListData;
 
     @ViewChild('modal')
     modal: ModalComponent;
 
+    @ViewChild('modalDetail')
+    modalDetail: ModalComponent;
 
-    constructor(private postuserinfoservice: PostuserinfoService) {
+
+    constructor(private todoListService: ToDoListService) {
     }
 
 
@@ -49,20 +51,23 @@ export class PostuserinfoComponent implements OnInit {
         this.getToDoList(this.page);
     }
 
-    openTaskModal(){
+    openTaskModal() {
         this.modal.open();
     }
 
-
+    openTodoDetailModal(toDoData: ToDoListData) {
+        this.toDoDetailData = toDoData;
+        this.modalDetail.open();
+    }
     getToDoList(page) {
-        this.postuserinfoservice.getToDoList(page)
+        this.todoListService.getToDoList(0, 10)
             .subscribe(
                 result => {
-                    this.tasks = result['content'];
+                    this.tasks = result['dataList'];
                     this.totalPages = result['totalPages'];
                     this.totalElements = result['totalElements'];
-                    this.last = result['last'];
-                    this.size = result['size'];
+                    // this.last = result['last'];
+                    const Pageinfo = result['pageInfo'];
                     this.number = result['number'];
                     this.numberOfElements = result['numberOfElements'];
                     this.page = result['number'];
@@ -74,10 +79,10 @@ export class PostuserinfoComponent implements OnInit {
     }
 
 
-    setEndYn(task: Task, endYn) {
+    setEndYn(task: ToDoListData, endYn) {
 
-        var rowId = task.rowId;
-        this.postuserinfoservice.setEndYn(this.rowId, this.endYn)
+        const rowId = task.rowId;
+        this.todoListService.setEndYn(this.rowId, this.endYn)
             .subscribe(
                 data => {
                     this.ngOnInit();
@@ -89,9 +94,9 @@ export class PostuserinfoComponent implements OnInit {
 
     }
 
-    editTask(task: Task) {
+    editTask(task: ToDoListData) {
 
-        this.postuserinfoservice.editTask(task)
+        this.todoListService.editTask(task)
             .subscribe(
                 data => {
                     this.ngOnInit();
@@ -104,12 +109,12 @@ export class PostuserinfoComponent implements OnInit {
     }
 
 
-    addRefTask(ref){
+    addRefTask(ref) {
         this.refTasks.concat(ref);
     }
 
-    addTask(mission){
-        this.postuserinfoservice.addToDo(mission, this.refTasks)
+    addTask(mission) {
+        this.todoListService.addToDo(mission, this.refTasks)
             .subscribe(
                 data => {
                     this.ngOnInit();
@@ -121,10 +126,9 @@ export class PostuserinfoComponent implements OnInit {
 
     }
 
-
     // 페이징
     search(terms: string) {
-        this.searchTermStream.next(terms)
+        this.searchTermStream.next(terms);
     }
 
     // 모달
