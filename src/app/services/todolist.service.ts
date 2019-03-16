@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {ToDoListData} from '../models/todolist';
 import 'rxjs/add/operator/catch';
 
-
 @Injectable()
 export class ToDoListService {
 
@@ -16,14 +15,13 @@ export class ToDoListService {
     }
 
     getToDoList(position, size): Observable<ToDoListData[]> {
-
-        return this.http.get(this.url + '/list/' + position + '/' + size, {headers: this.prepareHeaders()})
+        return this.http.get(this.url + '/list/' + position + '/' + size,
+            {headers: this.prepareHeaders()})
             .map(res => res.json())
             .catch(this.handleError);
     }
 
     addToDo(toDo, refIds) {
-        alert(toDo + refIds);
         return this.http.post(this.url, {
             toDo: toDo,
             refId: refIds
@@ -31,7 +29,6 @@ export class ToDoListService {
             .map(res => res)
             .catch(this.handleError);
     }
-
 
 
     setEndYn(rowId): Observable<ToDoListData[]> {
@@ -62,6 +59,4 @@ export class ToDoListService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
-
-
 }

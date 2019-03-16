@@ -2,12 +2,10 @@
     <div class="container">
         <div class="card-header" style="margin-bottom: 2%">
             <h2 style="font-weight: 900">Todo List</h2>
-
             <div class="card-body card-padding" style="text-align: right;">
                 <button class="btn btn-info hec-button" (click)="openTaskModal()">할 일 추가하기</button>
             </div>
-            <p style="text-align: left; font-weight: bold">총 : {{size}}건</p>
-
+            <p style="text-align: left; font-weight: bold">총 : {{pageInfo?.totalCount}}건</p>
         </div>
         <div class="card">
             <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" (∫)="closed()"
@@ -23,21 +21,28 @@
                                 <td width="30%" style="color: #418c97; font-weight: bold">할 일</td>
                                 <td><input type="text" #toDoInputAdd autofocus
                                            class="form-control"
-                                           maxlength="100" width="100%" title="task"/></td>
+                                           maxlength="100" width="100%"/></td>
                             </tr>
-
                             <tr>
-                                <td width="30%" style="color: #418c97; font-weight: bold">할일 참조</td>
-                                <td> <a *ngFor="let task of tasks">
-                                    <input type="checkbox" title="endYn" value="{{task.rowId}}"
-                                           style="width:17px; height:17px;" #chkRefIds (click)="addRefId(task.rowId)">@{{task.rowId}}&nbsp;</a>
+                                <td width="30%" style="color: #418c97; font-weight: bold">할일 참조(콤마 구분)</td>
+
+                                <td>
+                                    예) 1,3,4
+                                    <input type="text"  class="form-control"
+                                           maxlength="100" width="100%" #RefIdsInput/>
                                 </td>
+                                <!--<td><a *ngFor="let task of toDoDatas">-->
+                                    <!--<input type="checkbox" title="endYn" value="{{task.rowId}}"-->
+                                           <!--style="width:17px; height:17px;" #chkRefIds (click)="addRefId(task.rowId)">@{{task.rowId}}&nbsp;</a>-->
+                                <!--</td>-->
                             </tr>
                             <br>
                             <tr align="right">
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="addTask(toDoInputAdd.value);">추가</button>&nbsp;
+                                    <button type="button" class="btn btn-info" (click)="addTask(toDoInputAdd.value, RefIdsInput.value);">
+                                        추가
+                                    </button>&nbsp;
                                     <button type="button" class="btn btn-default" data-dismiss="modal"
                                             (click)="modal.close()">닫기
                                     </button>
@@ -47,8 +52,6 @@
                     </form>
                 </modal-body>
             </modal>
-
-
             <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" (∫)="closed()"
                    (onDismiss)="dismissed()"
                    (onOpen)="opened()" [cssClass]="cssClass" #modalDetail>
@@ -102,28 +105,27 @@
                     </form>
                 </modal-body>
             </modal>
-
             <table class="table table-hover" style="margin-left: auto; margin-right: auto;">
-
                 <tr style="color: #418c97;">
                     <th width="10%">Id</th>
                     <th width="20%">할일</th>
                     <th width="18%">참조된일</th>
-                    <th width="19%">작성일시</th>
-                    <th width="19%">최종수정일시</th>
-                    <th width="14%">완료상태</th>
+                    <th width="20%">작성일시</th>
+                    <th width="20%">최종수정일시</th>
+                    <th width="12%">완료상태</th>
                 </tr>
                 <tbody>
-                <tr *ngFor="let task of tasks">
-                    <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.rowId }}</td>
-                    <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.toDo }}</td>
-                    <td style="cursor: hand" (click)="openTodoDetailModal(task)"><a
-                            *ngFor="let refData of task.refData">@{{refData.refId}}&nbsp;</a></td>
-                    <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.regDate }}</td>
-                    <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.modDate }}</td>
-                    <td *ngIf="task.endYn=='Y'">완료</td>
-                    <td *ngIf="task.endYn=='N'"><button class="btn btn-info hec-button" type="submit" (click)="setEndYn(task.rowId)">완료</button>
-                       </td>
+                <tr *ngFor="let toDoData of toDoDatas">
+                    <td style="cursor: hand" (click)="openTodoDetailModal(toDoData)">{{ toDoData.rowId }}</td>
+                    <td style="cursor: hand" (click)="openTodoDetailModal(toDoData)">{{ toDoData.toDo }}</td>
+                    <td style="cursor: hand" (click)="openTodoDetailModal(toDoData)"><a
+                            *ngFor="let refData of toDoData.refData">@{{refData.refId}}&nbsp;</a></td>
+                    <td style="cursor: hand" (click)="openTodoDetailModal(toDoData)">{{ toDoData.regDate }}</td>
+                    <td style="cursor: hand" (click)="openTodoDetailModal(toDoData)">{{ toDoData.modDate }}</td>
+                    <td *ngIf="toDoData.endYn=='Y'">완료</td>
+                    <td *ngIf="toDoData.endYn=='N'">
+                        <button class="btn btn-info hec-button" type="submit" (click)="setEndYn(toDoData.rowId)">완료</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
