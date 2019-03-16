@@ -10,10 +10,10 @@
   
   
 #### Backend API로 proxy 설정
- todoList-Backend 프로젝트 (https://github.com/annajinee/todoList-backEnd)와 함께 실행 합니다.
+ [todoList-Backend](https://github.com/annajinee/todoList-backEnd) 프로젝트와 함께 실행 합니다.
   
 
-*( proxy.config.json 파일 내 "target": "http://localhost:8080"로 데이터 요청합니다. )* 
+*( 데이터 요청 시 proxy.config.json 파일 내 "target": "http://localhost:8080"로 요청하고 있습니다. )* 
 
  
 <br>  
