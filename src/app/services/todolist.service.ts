@@ -22,32 +22,31 @@ export class ToDoListService {
             .catch(this.handleError);
     }
 
-    addToDo(mission, refTasks): Observable<ToDoListData[]> {
-
+    addToDo(toDo, refIds) {
+        alert(toDo + refIds);
         return this.http.post(this.url, {
-            task: ToDoListData
+            toDo: toDo,
+            refId: refIds
         }, {headers: this.prepareHeaders()})
-            .map(res => <ToDoListData[]> res.json())
+            .map(res => res)
             .catch(this.handleError);
     }
 
 
 
-    setEndYn(rowId, endYn): Observable<ToDoListData[]> {
+    setEndYn(rowId): Observable<ToDoListData[]> {
         return this.http.put(this.url + '/' + rowId, {
             rowId: rowId,
-            endYn: endYn
+            endYn: 'Y'
         }, {headers: this.prepareHeaders()})
-            .catch(this.handleError);
+            .map(res => res)
+            .catch(res => res.status);
     }
 
-    editTask(todo: ToDoListData): Observable<ToDoListData[]> {
-        return this.http.put(this.url + '/' + todo.rowId, {
-            rowId: todo.rowId,
-            mission: todo.toDo,
-            regDate: todo.regDate,
-            modDate: todo.modDate,
-            endYn: todo.endYn
+    editTodo(rowId, toDo) {
+        return this.http.put(this.url + '/' + rowId, {
+            rowId: rowId,
+            toDo: toDo
         }, {headers: this.prepareHeaders()})
             .catch(this.handleError);
     }

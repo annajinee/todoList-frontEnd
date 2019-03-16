@@ -1,5 +1,5 @@
 import {Routes, RouterModule} from '@angular/router';
-import {ToDoListComponent} from './taskInfo/todolist.component';
+import {ToDoListComponent} from './todo/todolist.component';
 
 const appRoutes: Routes = [
 

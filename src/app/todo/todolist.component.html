@@ -2,16 +2,14 @@
     <div class="container">
         <div class="card-header" style="margin-bottom: 2%">
             <h2 style="font-weight: 900">Todo List</h2>
+
+            <div class="card-body card-padding" style="text-align: right;">
+                <button class="btn btn-info hec-button" (click)="openTaskModal()">할 일 추가하기</button>
+            </div>
+            <p style="text-align: left; font-weight: bold">총 : {{size}}건</p>
+
         </div>
         <div class="card">
-            <div class="card-body card-padding">
-                <div class="row">
-                    <div class="col-sm-3 m-b-25" align="left" style="vertical-align:bottom">
-                        <button class="btn btn-info hec-button" (click)="openTaskModal()">할 일 추가하기</button>
-                    </div>
-                </div>
-            </div>
-
             <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" (∫)="closed()"
                    (onDismiss)="dismissed()"
                    (onOpen)="opened()" [cssClass]="cssClass" #modal>
@@ -23,32 +21,23 @@
                         <table class="table table-striped">
                             <tr>
                                 <td width="30%" style="color: #418c97; font-weight: bold">할 일</td>
-                                <td><input type="text" #mission autofocus
+                                <td><input type="text" #toDoInputAdd autofocus
                                            class="form-control"
                                            maxlength="100" width="100%" title="task"/></td>
                             </tr>
 
                             <tr>
                                 <td width="30%" style="color: #418c97; font-weight: bold">할일 참조</td>
-                                <td>
-                                    <select class="selectpicker" style="width:75%" title="refTask">
-                                        <option value="">전체</option>
-                                        <option value="{{task.rowId}}" *ngFor="let tasks of Tasks">
-                                            [{{task.rowId}}]{{task.mission}}
-                                        </option>
-                                        <button type="button" class="btn btn-info" style="margin-left: 4%" (click)="addRefTask(task.rowId);">추가</button>
-                                    </select>
+                                <td> <a *ngFor="let task of tasks">
+                                    <input type="checkbox" title="endYn" value="{{task.rowId}}"
+                                           style="width:17px; height:17px;" #chkRefIds (click)="addRefId(task.rowId)">@{{task.rowId}}&nbsp;</a>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td width="30%" style="color: #418c97; font-weight: bold">참조 된 일</td>
-                                <td>{{refTasks}}</td>
                             </tr>
                             <br>
                             <tr align="right">
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="addTask(mission);">저장</button>&nbsp;
+                                    <button type="button" class="btn btn-info" (click)="addTask(toDoInputAdd.value);">추가</button>&nbsp;
                                     <button type="button" class="btn btn-default" data-dismiss="modal"
                                             (click)="modal.close()">닫기
                                     </button>
@@ -75,9 +64,13 @@
                             </tr>
                             <tr>
                                 <td width="30%" style="color: #418c97; font-weight: bold">할 일</td>
-                                <td><input type="text" #toDoDetil autofocus data-value="{{toDoDetailData?.toDo}}"
+                                <td><input type="text" #toDoInputEdit autofocus data-value="{{toDoDetailData?.toDo}}"
                                            class="form-control"
                                            maxlength="16" width="100%"/></td>
+                            </tr>
+                            <tr>
+                                <td width="30%" style="color: #418c97; font-weight: bold">참조 된 일</td>
+                                <td><a *ngFor="let refData of refDataDetail">@{{refData.refId}}&nbsp;</a></td>
                             </tr>
                             <tr>
                                 <td width="30%" style="color: #418c97; font-weight: bold">작성일시</td>
@@ -95,11 +88,13 @@
                                 <td></td>
                                 <td>
                                     <button type="button" class="btn btn-info"
-                                            (click)="setCompdivcd(tierforcom, userid, compdivcdch.value, typech.value, '', trnynch.value, '');">
+                                            (click)="editToDo(toDoInputEdit.value);">
                                         수정
                                     </button>
                                     &nbsp;
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.close()">닫기</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                            (click)="modal.close()">닫기
+                                    </button>
                                 </td>
                             </tr>
 
@@ -108,34 +103,31 @@
                 </modal-body>
             </modal>
 
-
-
             <table class="table table-hover" style="margin-left: auto; margin-right: auto;">
-                <tr style="color: #418c97;" >
+
+                <tr style="color: #418c97;">
                     <th width="10%">Id</th>
-                    <th width="21%">할일</th>
-                    <th width="12%">참조일</th>
-                    <th width="20%">작성일시</th>
-                    <th width="20%">최종수정일시</th>
-                    <th width="10%">완료처리</th>
-                    <th width="7%">버튼</th>
+                    <th width="20%">할일</th>
+                    <th width="18%">참조된일</th>
+                    <th width="19%">작성일시</th>
+                    <th width="19%">최종수정일시</th>
+                    <th width="14%">완료상태</th>
                 </tr>
                 <tbody>
                 <tr *ngFor="let task of tasks">
                     <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.rowId }}</td>
                     <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.toDo }}</td>
-                    <td style="cursor: hand" (click)="openTodoDetailModal(task)">[1,2,3]</td>
+                    <td style="cursor: hand" (click)="openTodoDetailModal(task)"><a
+                            *ngFor="let refData of task.refData">@{{refData.refId}}&nbsp;</a></td>
                     <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.regDate }}</td>
                     <td style="cursor: hand" (click)="openTodoDetailModal(task)">{{ task.modDate }}</td>
                     <td *ngIf="task.endYn=='Y'">완료</td>
-                    <td *ngIf="task.endYn=='N'"><input type="checkbox" title="endYn" #endYn style="width:17px; height:17px;"><br></td>
-                    <td>
-                        <button class="btn btn-info hec-button" type="submit" (click)="setEndYn(endYn)">적용</button>
-                    </td>
+                    <td *ngIf="task.endYn=='N'"><button class="btn btn-info hec-button" type="submit" (click)="setEndYn(task.rowId)">완료</button>
+                       </td>
                 </tr>
                 </tbody>
             </table>
-            <pagination [total]="total$ | async" [page]="page" (goTo)="getToDoList($event, page)"></pagination>
+            <pagination [totalPage]="total$ | async" [page]="page" (goTo)="getToDoList($event, page)"></pagination>
         </div>
     </div>
 </section>

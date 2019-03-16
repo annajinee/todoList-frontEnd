@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, Input} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, Input, style} from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -7,12 +7,16 @@ import {Component, EventEmitter, Output, Input} from '@angular/core';
 })
 export class PaginationComponent {
 
+
     @Input()
-    total: number = 0;
+    totalPage: number = 0;
+
     @Input()
     page: number = 0;
+
     @Output()
     goTo: EventEmitter<number> = new EventEmitter<number>();
+
     from: number = 1;
     to: number;
 
@@ -20,11 +24,11 @@ export class PaginationComponent {
     }
 
     totalPages() {  // 페이지 수
-        return Math.ceil(this.total / 10);
+        return this.totalPage;
     }
 
     prevPage() {
-        return Math.max(1, this.page - 9); // 페이지 이전으로 //10페이지씩
+        return Math.max(1, this.page - 4); // 페이지 이전으로 //10페이지씩
         // return Math.max(1, this.page ); // 페이지 이전으로
     }
 
@@ -39,7 +43,7 @@ export class PaginationComponent {
 
 
     nextPage() {
-        return Math.min(this.totalPages(), this.page + 11);
+        return Math.min(this.totalPages(), this.page + 5);
     }
 
     pageClicked(page: number) {
@@ -51,12 +55,13 @@ export class PaginationComponent {
         if (this.totalPages() <= 10) {  // 10페이지 보다 작을 경우, 다 보이도록
             return this.range(this.from, this.totalPages() + 1);
         } else {
+            // more than 10 total pages so calculate start and end pages
             if (this.page <= 6) {
                 this.from = 1;
                 this.to = 10;
                 return this.range(this.from, this.to);
             } else if (this.page + 4 >= this.totalPages() + 1) {
-                this.from = this.totalPages() - 9;
+                this.from = this.totalPages() - 4;
                 this.to = this.totalPages() + 1;
                 return this.range(this.from, this.to);
             } else {
@@ -74,6 +79,6 @@ export class PaginationComponent {
             start = 0;
             stop = start;
         }
-        return Array.from(new Array(Number((stop - start) / step)), (x, i) => start + i * step)
+        return Array.from(new Array(Number((stop - start) / step)), (x, i) => start + i * step);
     }
 }

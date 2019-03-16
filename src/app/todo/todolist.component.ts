@@ -1,3 +1,4 @@
+///<reference path="../models/pageinfo.ts"/>
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
@@ -6,6 +7,7 @@ import {ToDoListData} from '../models/todolist';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import 'rxjs/add/observable/of';
 import {Pageinfo} from '../models/pageinfo';
+import {ToDoRefData} from '../models/todoref';
 
 
 @Component({
@@ -15,18 +17,9 @@ import {Pageinfo} from '../models/pageinfo';
 export class ToDoListComponent implements OnInit {
 
     tasks: ToDoListData[];
-    rowId: number;
-    endYn: string;
-    refTasks: Array<number>;
-    model: any = {};
-    totalPages: number;
-    totalElements: number;
-    last: number;
+
     size: number;
-    number: number;
-    numberOfElements: number;
     total$: Observable<number>;
-    private searchTermStream = new Subject<string>();
     page: number = 1;
     selected: string;
     output: string;
@@ -35,7 +28,9 @@ export class ToDoListComponent implements OnInit {
     keyboard: boolean = true;
     backdrop: string | boolean = true;
     toDoDetailData: ToDoListData;
-
+    refDataDetail: ToDoRefData[];
+    pageInfo: Pageinfo;
+    refIds: Array<number> = [];
     @ViewChild('modal')
     modal: ModalComponent;
 
@@ -48,6 +43,9 @@ export class ToDoListComponent implements OnInit {
 
 
     ngOnInit() {
+        if (this.page < 1) {
+            this.page = 1;
+        }
         this.getToDoList(this.page);
     }
 
@@ -57,21 +55,19 @@ export class ToDoListComponent implements OnInit {
 
     openTodoDetailModal(toDoData: ToDoListData) {
         this.toDoDetailData = toDoData;
+        this.refDataDetail = toDoData.refData;
         this.modalDetail.open();
     }
+
     getToDoList(page) {
-        this.todoListService.getToDoList(0, 10)
+        this.todoListService.getToDoList(page - 1, 5)
             .subscribe(
                 result => {
                     this.tasks = result['dataList'];
-                    this.totalPages = result['totalPages'];
-                    this.totalElements = result['totalElements'];
-                    // this.last = result['last'];
-                    const Pageinfo = result['pageInfo'];
-                    this.number = result['number'];
-                    this.numberOfElements = result['numberOfElements'];
-                    this.page = result['number'];
-                    this.total$ = Observable.of(this.totalElements);
+                    this.pageInfo = result['pageInfo'];
+                    this.size = this.pageInfo.totalCount;
+                    this.page = this.pageInfo.pageNumber;
+                    this.total$ = Observable.of(this.pageInfo.totalPage);
                 },
                 error => {
                     alert(error);
@@ -79,59 +75,55 @@ export class ToDoListComponent implements OnInit {
     }
 
 
-    setEndYn(task: ToDoListData, endYn) {
-
-        const rowId = task.rowId;
-        this.todoListService.setEndYn(this.rowId, this.endYn)
+    setEndYn(rowId) {
+        this.todoListService.setEndYn(rowId)
             .subscribe(
-                data => {
-                    this.ngOnInit();
+                result => {
+                    this.getToDoList(this.page + 1);
                 },
                 error => {
-                    alert('상태 변경을 실패 하였습니다' + error);
-                    this.ngOnInit();
+                    if (error.toString().includes('304')) {
+                        alert('참조된 일이 완료 되지 않아 변경할 수 없습니다');
+                    } else {
+                        alert('상태 변경을 실패 하였습니다');
+                        this.ngOnInit();
+                    }
                 });
 
     }
 
-    editTask(task: ToDoListData) {
-
-        this.todoListService.editTask(task)
+    editToDo(toDo) {
+        alert(this.toDoDetailData.toDo + ',' + this.toDoDetailData.rowId);
+        this.todoListService.editTodo(this.toDoDetailData.rowId, toDo)
             .subscribe(
-                data => {
-                    this.ngOnInit();
+                result => {
                     alert('수정하였습니다');
+                    location.reload();
                 },
                 error => {
                     alert('수정에 실패 하였습니다' + error);
-                    this.ngOnInit();
+                    location.reload();
                 });
     }
 
 
-    addRefTask(ref) {
-        this.refTasks.concat(ref);
-    }
-
-    addTask(mission) {
-        this.todoListService.addToDo(mission, this.refTasks)
+    addTask(todo) {
+        this.todoListService.addToDo(todo, this.refIds)
             .subscribe(
-                data => {
-                    this.ngOnInit();
+                reulst => {
+                    alert('등록하였습니다');
+                    location.reload();
                 },
                 error => {
                     alert('등록에 실패 하였습니다' + error);
-                    this.ngOnInit();
+                    location.reload();
                 });
-
     }
 
-    // 페이징
-    search(terms: string) {
-        this.searchTermStream.next(terms);
+    addRefId(refId) {
+        this.refIds.push(refId);
     }
 
-    // 모달
     closed() {
         this.output = '(closed) ' + this.selected;
     }
@@ -143,8 +135,4 @@ export class ToDoListComponent implements OnInit {
     opened() {
         this.output = '(opened)';
     }
-    open() {
-        this.modal.open();
-    }
-
 }
