@@ -59,10 +59,10 @@ id : 20 번으로 등록 완료
 
 #### 3. 할 일 조회 및 수정
 수정할 데이터의 row를 클릭하여 데이터 조회 및 할 일 수정이 가능합니다.
-<img src="http://drive.google.com/uc?export=view&id=116O6geQ9-p3GELSjoMkG-jbyc0T6BBCn">
+<img src="http://drive.google.com/uc?export=view&id=1VsnJBUsWQjm2kFwJlf6gjW444UHbG9CH">
 <img src="http://drive.google.com/uc?export=view&id=1sKF6av1dmYTLX7kAbt6ZFnHpMnb7bMdc">
 id: 20 수정 완료 
-<img src ="http://drive.google.com/uc?export=view&id=1-K6j7q_EjraeENcFPAOvdBgWUvMUFPn_">
+<img src ="http://drive.google.com/uc?export=view&id=1NX5Y0I5tJE1v5Md_noQrHhryD0u_y_Yz">
 
 #### 4. 할 일 완료 처리
 id: 20 번 데이터를 완료 처리
