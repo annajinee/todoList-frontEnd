@@ -7,7 +7,7 @@ import {AppComponent} from './app.component';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {PaginationComponent} from './pagination/pagination.component';
 import {ToDoListService} from './services/todolist.service';
-import {ToDoListComponent} from './taskInfo/todolist.component';
+import {ToDoListComponent} from './todo/todolist.component';
 
 @NgModule({
     imports: [

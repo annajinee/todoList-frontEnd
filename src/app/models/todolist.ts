@@ -6,7 +6,7 @@ export class ToDoListData {
     private _regDate: string;
     private _modDate: string;
     private _endYn: string;
-    private _refData: Array<ToDoRefData>;
+    private _refData: ToDoRefData[];
 
     get rowId(): number {
         return this._rowId;
@@ -48,11 +48,12 @@ export class ToDoListData {
         this._endYn = value;
     }
 
-    get refData(): Array<ToDoRefData> {
+
+    get refData(): ToDoRefData[] {
         return this._refData;
     }
 
-    set refData(value: Array<ToDoRefData>) {
+    set refData(value: ToDoRefData[]) {
         this._refData = value;
     }
 }
