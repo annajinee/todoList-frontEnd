@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output, Input, style} from '@angular/core';
+import {Component, EventEmitter, Output, Input} from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -7,40 +7,33 @@ import {Component, OnInit, EventEmitter, Output, Input, style} from '@angular/co
 })
 export class PaginationComponent {
 
-
     @Input()
     totalPage: number = 0;
-
     @Input()
     page: number = 0;
-
     @Output()
     goTo: EventEmitter<number> = new EventEmitter<number>();
-
     from: number = 1;
     to: number;
 
     constructor() {
     }
 
-    totalPages() {  // 페이지 수
+    totalPages() {
         return this.totalPage;
     }
 
     prevPage() {
-        return Math.max(1, this.page - 4); // 페이지 이전으로 //10페이지씩
-        // return Math.max(1, this.page ); // 페이지 이전으로
+        return Math.max(1, this.page - 4);
     }
 
     pageFirst() {
-        return Math.max(1, -1); // 페이지 처음으로 (0페이지 부터 시작 -> 화면은 1로 ...-1해야함)
+        return Math.max(1, -1);
     }
-
 
     pageLast() {
         return Math.min(this.totalPages(), this.totalPages());
     }
-
 
     nextPage() {
         return Math.min(this.totalPages(), this.page + 5);
@@ -51,17 +44,15 @@ export class PaginationComponent {
     }
 
     pagesRange() {
-
-        if (this.totalPages() <= 10) {  // 10페이지 보다 작을 경우, 다 보이도록
+        if (this.totalPages() <= 10) {
             return this.range(this.from, this.totalPages() + 1);
         } else {
-            // more than 10 total pages so calculate start and end pages
             if (this.page <= 6) {
                 this.from = 1;
                 this.to = 10;
                 return this.range(this.from, this.to);
             } else if (this.page + 4 >= this.totalPages() + 1) {
-                this.from = this.totalPages() - 4;
+                this.from = this.totalPages() - 9;
                 this.to = this.totalPages() + 1;
                 return this.range(this.from, this.to);
             } else {
@@ -70,11 +61,9 @@ export class PaginationComponent {
                 return this.range(this.from, this.to);
             }
         }
-
     }
 
     range(start, stop, step = 1) {
-
         if (!stop) {
             start = 0;
             stop = start;

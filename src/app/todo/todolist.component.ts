@@ -1,7 +1,5 @@
-///<reference path="../models/pageinfo.ts"/>
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
 import {ToDoListService} from '../services/todolist.service';
 import {ToDoListData} from '../models/todolist';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
@@ -16,21 +14,15 @@ import {ToDoRefData} from '../models/todoref';
 })
 export class ToDoListComponent implements OnInit {
 
-    tasks: ToDoListData[];
-
-    size: number;
+    toDoDatas: ToDoListData[];
     total$: Observable<number>;
+    pageInfo: Pageinfo;
     page: number = 1;
     selected: string;
     output: string;
-    cssClass: string = '';
-    animation: boolean = true;
-    keyboard: boolean = true;
-    backdrop: string | boolean = true;
     toDoDetailData: ToDoListData;
-    refDataDetail: ToDoRefData[];
-    pageInfo: Pageinfo;
-    refIds: Array<number> = [];
+    refDetailData: ToDoRefData[];
+
     @ViewChild('modal')
     modal: ModalComponent;
 
@@ -55,7 +47,7 @@ export class ToDoListComponent implements OnInit {
 
     openTodoDetailModal(toDoData: ToDoListData) {
         this.toDoDetailData = toDoData;
-        this.refDataDetail = toDoData.refData;
+        this.refDetailData = toDoData.refData;
         this.modalDetail.open();
     }
 
@@ -63,9 +55,8 @@ export class ToDoListComponent implements OnInit {
         this.todoListService.getToDoList(page - 1, 5)
             .subscribe(
                 result => {
-                    this.tasks = result['dataList'];
+                    this.toDoDatas = result['dataList'];
                     this.pageInfo = result['pageInfo'];
-                    this.size = this.pageInfo.totalCount;
                     this.page = this.pageInfo.pageNumber;
                     this.total$ = Observable.of(this.pageInfo.totalPage);
                 },
@@ -89,7 +80,6 @@ export class ToDoListComponent implements OnInit {
                         this.ngOnInit();
                     }
                 });
-
     }
 
     editToDo(toDo) {
@@ -107,8 +97,9 @@ export class ToDoListComponent implements OnInit {
     }
 
 
-    addTask(todo) {
-        this.todoListService.addToDo(todo, this.refIds)
+    addTask(todo, refIds) {
+        const refIdArray: Array<number>  = refIds.split(',');
+        this.todoListService.addToDo(todo, refIdArray)
             .subscribe(
                 reulst => {
                     alert('등록하였습니다');
@@ -120,9 +111,6 @@ export class ToDoListComponent implements OnInit {
                 });
     }
 
-    addRefId(refId) {
-        this.refIds.push(refId);
-    }
 
     closed() {
         this.output = '(closed) ' + this.selected;
