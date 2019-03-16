@@ -38,3 +38,10 @@ Node.js/NPM을 설치한 후 terminal에서 아래의 명령어를 입력하여 
  http://localhost:4200
 
 위 링크로 실행 화면 확인 가능합니다. 
+
+#### 화면 설명
+1. 메뉴 화면
+<img src="https://drive.google.com/open?id=1lcuvYchTUzY3lb6t5JEjH96vIP7LjpiR"/>
+2. 할 일 추가
+상단 할 일 추가 탭을 눌러 할 일을 추가 합니다. 
+<img src="https://drive.google.com/file/d/1ewzCbn8NYGI8QpiXati0suw1ioGygDfv/view?usp=sharing"/>
