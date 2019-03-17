@@ -31,16 +31,12 @@
                                     <input type="text"  class="form-control"
                                            maxlength="100" width="100%" #RefIdsInput/>
                                 </td>
-                                <!--<td><a *ngFor="let task of toDoDatas">-->
-                                    <!--<input type="checkbox" title="endYn" value="{{task.rowId}}"-->
-                                           <!--style="width:17px; height:17px;" #chkRefIds (click)="addRefId(task.rowId)">@{{task.rowId}}&nbsp;</a>-->
-                                <!--</td>-->
                             </tr>
                             <br>
                             <tr align="right">
                                 <td></td>
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="addTask(toDoInputAdd.value, RefIdsInput.value);">
+                                    <button type="button" class="btn btn-info" (click)="addTodo(toDoInputAdd.value, RefIdsInput.value);">
                                         추가
                                     </button>&nbsp;
                                     <button type="button" class="btn btn-default" data-dismiss="modal"

@@ -28,12 +28,17 @@ Node.js/NPM을 설치한 후 terminal에서 아래의 명령어를 입력하여 
 
     npm install -g @angular/cli
 
+angular cli 설치 후 필요한 node modules 가져오기 위하여 아래 명령어를 입력합니다. 
+
+    npm install
 
 
-<br>프로젝트 실행 명령어는 아래와 같습니다.   
+<br>프로젝트 실행 명령어는 아래와 같습니다.
+(angular cli에서 실행)  
   
      
-     ng serve --proxy-config ./proxy.config.json
+     > todolist@0.0.0 start /Users/annakim/todoList-frontEnd
+     > ng serve --proxy-config ./proxy.config.json
 
   ( todoList-frontEnd/ 폴더 내 에서 명령어 입력 )          
 <br>  

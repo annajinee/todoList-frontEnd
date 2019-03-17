@@ -83,7 +83,6 @@ export class ToDoListComponent implements OnInit {
     }
 
     editToDo(toDo) {
-        alert(this.toDoDetailData.toDo + ',' + this.toDoDetailData.rowId);
         this.todoListService.editTodo(this.toDoDetailData.rowId, toDo)
             .subscribe(
                 result => {
@@ -97,8 +96,11 @@ export class ToDoListComponent implements OnInit {
     }
 
 
-    addTask(todo, refIds) {
-        const refIdArray: Array<number>  = refIds.split(',');
+    addTodo(todo, refIds) {
+        const refIdArray: Array<number> = [];
+        if (refIdArray.length > 0) {
+            refIds.split(',');
+        }
         this.todoListService.addToDo(todo, refIdArray)
             .subscribe(
                 reulst => {
