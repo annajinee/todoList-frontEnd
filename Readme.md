@@ -66,6 +66,8 @@ angular cli 설치 후 필요한 node modules 가져오기 위하여 아래 명�
 id : 20 번으로 등록 완료
 <img src="http://drive.google.com/uc?export=view&id=1yDVgME92TVaBQdfDEeTarRzO21lE-P6a" style width="750"/>
 
+<br>
+
 ### 3. 할 일 조회 및 수정
 
 수정할 데이터의 row를 클릭하여 데이터 조회 및 할 일 수정이 가능합니다.
