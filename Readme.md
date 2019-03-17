@@ -53,28 +53,35 @@ angular cli 설치 후 필요한 node modules 가져오기 위하여 아래 명�
 ## 실행 화면 설명
 
 ### 1. 메뉴 화면
-<img src="http://drive.google.com/uc?export=view&id=1lcuvYchTUzY3lb6t5JEjH96vIP7LjpiR" style width="800">
+
+<img src="http://drive.google.com/uc?export=view&id=1lcuvYchTUzY3lb6t5JEjH96vIP7LjpiR" style width="750"/>
 
 ###  2. 할 일 추가
 
 상단 '할 일 추가하기' 탭을 눌러 추가 할 일을 입력합니다.
-<img src="http://drive.google.com/uc?export=view&id=1spsAgVXYVj6eJei05OGKCq4W_RcqqKAA" style width="800">
+<img src="http://drive.google.com/uc?export=view&id=1spsAgVXYVj6eJei05OGKCq4W_RcqqKAA" style width="750"/>
 
-<img src="http://drive.google.com/uc?export=view&id=19XVlaFCip-EGEOYErMMVI1aqMtGpBfcm" style width="800">
+<img src="http://drive.google.com/uc?export=view&id=19XVlaFCip-EGEOYErMMVI1aqMtGpBfcm" style width="750"/>
+
 id : 20 번으로 등록 완료
-<img src="http://drive.google.com/uc?export=view&id=1yDVgME92TVaBQdfDEeTarRzO21lE-P6a" style width="800">
+<img src="http://drive.google.com/uc?export=view&id=1yDVgME92TVaBQdfDEeTarRzO21lE-P6a" style width="750"/>
 
 ### 3. 할 일 조회 및 수정
+
 수정할 데이터의 row를 클릭하여 데이터 조회 및 할 일 수정이 가능합니다.
-<img src="http://drive.google.com/uc?export=view&id=1VsnJBUsWQjm2kFwJlf6gjW444UHbG9CH" style width="800">
-<img src="http://drive.google.com/uc?export=view&id=1sKF6av1dmYTLX7kAbt6ZFnHpMnb7bMdc" style width="800">
+<img src="http://drive.google.com/uc?export=view&id=1VsnJBUsWQjm2kFwJlf6gjW444UHbG9CH" style width="750"/>
+
+<img src="http://drive.google.com/uc?export=view&id=1sKF6av1dmYTLX7kAbt6ZFnHpMnb7bMdc" style width="750"/>
+
 id: 20 수정 완료 
-<img src ="http://drive.google.com/uc?export=view&id=1NX5Y0I5tJE1v5Md_noQrHhryD0u_y_Yz" style width="800">
+<img src ="http://drive.google.com/uc?export=view&id=1NX5Y0I5tJE1v5Md_noQrHhryD0u_y_Yz" style width="750"/>
 
 ### 4. 할 일 완료 처리
+
 id: 20 번 데이터를 완료 처리
 ( 참조된 5,6 번 일이 완료되어 완료 처리 가능 )
-<img src="http://drive.google.com/uc?export=view&id=1MLfEW4SfsHc0gisfMwkn4LH0fN_vwnv7" style width="700"/>
+<img src="http://drive.google.com/uc?export=view&id=1MLfEW4SfsHc0gisfMwkn4LH0fN_vwnv7" style width="750"/>
+
 id: 2 번 데이터를 완료처리
 ( 참조된 1번 일이 완료되지 않아 완료 처리 불가능)
-<img src="http://drive.google.com/uc?export=view&id=18sCHn3F9M5D-S2wBPGaUzC3DFerYwIRm" style width="700"/>
+<img src="http://drive.google.com/uc?export=view&id=18sCHn3F9M5D-S2wBPGaUzC3DFerYwIRm" style width="750"/>
