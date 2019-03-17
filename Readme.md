@@ -34,13 +34,12 @@ angular cli 설치 후 필요한 node modules 가져오기 위하여 아래 명�
 
 
 <br>프로젝트 실행 명령어는 아래와 같습니다.
-(angular cli에서 실행)  
+(angular cli내 todoList-frontEnd/ 위치에서 입력)  
   
      
-     > todolist@0.0.0 start /Users/annakim/todoList-frontEnd
-     > ng serve --proxy-config ./proxy.config.json
+     실행 : ng serve --proxy-config ./proxy.config.json
 
-  ( todoList-frontEnd/ 폴더 내 에서 명령어 입력 )          
+      
 <br>  
 #### 실행 주소   
   
