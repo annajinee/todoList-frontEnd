@@ -51,7 +51,7 @@ angular cli 설치 후 필요한 node modules 가져오기 위하여 아래 명�
 <br>
 <br>
 ## 실행 화면 설명
--
+
 ### 1. 메뉴 화면
 <img src="http://drive.google.com/uc?export=view&id=1lcuvYchTUzY3lb6t5JEjH96vIP7LjpiR"/>
 
