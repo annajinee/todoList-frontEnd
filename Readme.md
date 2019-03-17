@@ -73,7 +73,7 @@ id : 20 번으로 등록 완료
 
 <img src="http://drive.google.com/uc?export=view&id=1sKF6av1dmYTLX7kAbt6ZFnHpMnb7bMdc" style width="750"/>
 
-id: 20 수정 완료 
+id: 20 수정 완료 <br>
 <img src ="http://drive.google.com/uc?export=view&id=1NX5Y0I5tJE1v5Md_noQrHhryD0u_y_Yz" style width="750"/>
 
 ### 4. 할 일 완료 처리
